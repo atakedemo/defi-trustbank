@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@sphereon/oid4vci-client": "^0.10.3",
+    "axios": "^1.6.8"
+  }
+}
