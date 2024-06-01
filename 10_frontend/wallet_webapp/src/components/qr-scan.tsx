@@ -4,9 +4,38 @@
 * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
 */
 "use client"
-import {useState, useEffect, useRef} from 'react'
-import jsQR from 'jsqr'
-import { Button } from "@/components/ui/button"
+import {useState, useEffect, useRef} from 'react';
+import jsQR from 'jsqr';
+import { Button } from "@/components/ui/button";
+import axios from 'axios';
+import { CredentialOfferClient, MetadataClient,} from '@sphereon/oid4vci-client';
+
+const getAccessToken = async(initiationURI_: string) => {
+  const _initiationRequestWithUrl = await CredentialOfferClient.fromURI(initiationURI_);
+  const _metadata = await MetadataClient.retrieveAllMetadataFromCredentialOffer(_initiationRequestWithUrl);
+
+  console.log(_initiationRequestWithUrl.preAuthorizedCode);
+  console.log(_metadata.token_endpoint);
+  console.log(_metadata.issuer);
+  
+  const clientId = '218232426';
+  
+  const tokenReq = new URLSearchParams();
+  tokenReq.append('client_id', clientId);
+  tokenReq.append('grant_type', 'urn:ietf:params:oauth:grant-type:pre-authorized_code');
+  tokenReq.append('pre-authorized_code', 'aFYv7nBLVxB8n6rjNOGs3MSsAcpQVEWT9JVn886S2M0');
+
+  await axios.post(_metadata.token_endpoint, tokenReq, {
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Access-Control-Allow-Origin': '*'
+      },
+  }).then(res => {
+      console.log(res.data)
+  }).catch(e=> {
+      console.log(e.response.data);
+  });
+}
 
 export function QrScan() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -32,8 +61,8 @@ export function QrScan() {
                 if (imageData) {
                     const code = jsQR(imageData.data, contentWidth, contentHeight)
                     if (code) {
-                        // QRコードの情報が表示されます
-                        console.log(code.data)
+                      console.log(code.data);
+                      getAccessToken(code.data);
                     }
                 }
                 setTimeout(()=>{ checkImage() }, 200);
@@ -82,9 +111,6 @@ export function QrScan() {
         <div className="mt-6 text-center text-gray-500 dark:text-gray-400 font-medium" id="qr-result" />
       </div>
     </div>
-    // <>
-    //   <video ref={videoRef} autoPlay playsInline width={contentWidth} height={contentHeight}></video>
-    //   <canvas ref={canvasRef} className='hidden'></canvas>
-    // </>
   )
+
 }
