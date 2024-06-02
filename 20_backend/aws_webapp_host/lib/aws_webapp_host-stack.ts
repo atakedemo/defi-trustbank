@@ -35,6 +35,8 @@ export class AwsWebappHostStack extends cdk.Stack {
       serverAccessLogsPrefix: "logs",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      websiteIndexDocument: "index.html",
+      websiteErrorDocument: "404.html"
     });
     const cloudfrontOai = new cloudfront.OriginAccessIdentity(
       this,
@@ -92,11 +94,6 @@ export class AwsWebappHostStack extends cdk.Stack {
       // domainNames: [`${domainName}`],
       // certificate: trustBankWebCertificate,
     });
-    // new s3deploy.BucketDeployment(this, "DeployWebsite", {
-    //   sources: [s3deploy.Source.asset("next/out")],
-    //   destinationBucket: trustBankWebBucket,
-    //   destinationKeyPrefix: "web", // optional prefix in destination bucket
-    // });
     // new route53.ARecord(this, "cdnRecord", {
     //   zone: trustBankWebHostedZone,
     //   target: route53.RecordTarget.fromAlias(
@@ -146,7 +143,7 @@ export class AwsWebappHostStack extends cdk.Stack {
     });
     oidcDeployRole.attachInlinePolicy(deployToS3Policy);
     const clearCloudFrontCache = new iam.Policy(this, 'clearCloudFrontCache', {
-      policyName: 'deployPolicy',
+      policyName: 'deleteCachePolicy',
       statements: [
         new iam.PolicyStatement({
           effect: iam.Effect.ALLOW,
@@ -165,6 +162,6 @@ export class AwsWebappHostStack extends cdk.Stack {
         }),
       ],
     });
-    oidcDeployRole.attachInlinePolicy(deployToS3Policy);
+    oidcDeployRole.attachInlinePolicy(clearCloudFrontCache);
   }
 }
