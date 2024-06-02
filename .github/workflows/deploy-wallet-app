@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "10_frontend/wallet_webapp/**"
 
 jobs:
   deploy-wallet-app:
