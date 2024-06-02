@@ -6,7 +6,7 @@ import {QrScan} from '@/components/qr-scan'
 export default function PresentationVP(){
     return (
         <main>
-            <QrScan />
+            <h1>Present Your VCs</h1>
         </main>
     )
 }
