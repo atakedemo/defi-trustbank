@@ -38,7 +38,9 @@ jobs:
         with:
           node-version: 18
       - name: Install package
-        run: npm ci
+        run: |
+          cd 10_frontend/wallet_webapp
+          npm ci
       - name: Build
         run: npm run build
       - name: Deploy
