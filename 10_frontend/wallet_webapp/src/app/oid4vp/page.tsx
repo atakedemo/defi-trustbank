@@ -7,6 +7,7 @@ export default function PresentationVP(){
     return (
         <main>
             <h1>Present Your VP</h1>
+            <h2>Select VCs</h2>
         </main>
     )
 }
