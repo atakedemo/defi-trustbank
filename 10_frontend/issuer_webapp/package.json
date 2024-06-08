@@ -1,12 +1,78 @@
 {
-    "dependencies": {
-      "body-parser": "^1.20.2",
-      "bs58": "^5.0.0",
-      "did-jwt": "^7.4.7",
-      "elliptic": "^6.5.4",
-      "express": "^4.18.2",
-      "qrcode": "^1.5.3",
-      "uuid": "^9.0.1"
+  "name": "@sphereon/oid4vc-demo",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "pnpm -r --stream build",
+    "build:clean": "pnpm -r --stream build:clean",
+    "clean": "rimraf --glob **/dist **/coverage **/pnpm-lock.yaml packages/**/node_modules node_modules packages/**/tsconfig.tsbuildinfo",
+    "test": "pnpm run test",
+    "start:dev": "pnpm -r --stream start:dev",
+    "start:prod": "pnpm -r --stream start:prod",
+    "publish:latest": "lerna publish --conventional-commits --include-merged-tags --create-release github --yes --dist-tag latest --registry \"https://registry.npmjs.org/:_authToken=${NPM_TOKEN}\"",
+    "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes --registry \"https://registry.npmjs.org/:_authToken=${NPM_TOKEN}\"",
+    "publish:unstable": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid unstable --pre-dist-tag unstable --yes --registry \"https://registry.npmjs.org/:_authToken=${NPM_TOKEN}\""
+  },
+  "devDependencies": {
+    "concurrently": "^1.0.0",
+    "typescript": "4.9.5",
+    "rimraf": "^5.0.0"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "did-jwt": "6.11.6",
+      "did-jwt-vc": "3.1.3",
+      "ethr-did": "2.3.9",
+      "@sphereon/ssi-types": "0.23.5-unstable.87",
+      "@sphereon/ssi-sdk.core": "0.23.5-unstable.87",
+      "@sphereon/ssi-sdk.data-store": "0.23.5-unstable.87",
+      "@sphereon/ssi-sdk.pd-manager": "0.23.5-unstable.87",
+      "@sphereon/ssi-sdk.siopv2-oid4vp-rp-auth": "0.23.5-unstable.87",
+      "@sphereon/ssi-sdk.presentation-exchange": "0.23.5-unstable.87",
+      "@sphereon/oid4vci-client": "0.10.4-unstable.61",
+      "@sphereon/oid4vci-common": "0.10.4-unstable.61",
+      "@sphereon/oid4vci-issuer": "0.10.4-unstable.61",
+      "@sphereon/oid4vci-issuer-server": "0.10.4-unstable.61",
+      "@sphereon/ui-components.core": "0.2.1-unstable.2",
+      "@sphereon/ui-components.ssi-react": "0.2.1-unstable.2",
+      "@sphereon/pex": "3.3.2",
+      "@sphereon/pex-models": "2.2.4",
+      "@sphereon/did-auth-siop": "0.6.4",
+      "@sphereon/ssi-express-support": "0.23.5-unstable.87",
+      "@sphereon/did-uni-client": "0.6.3-unstable.1",
+      "@veramo/core": "4.2.0",
+      "@veramo/credential-w3c": "4.2.0",
+      "@veramo/data-store": "4.2.0",
+      "@veramo/did-jwt": "4.2.0",
+      "@veramo/credential-ld": "4.2.0",
+      "@veramo/utils": "4.2.0",
+      "@veramo/did-manager": "4.2.0",
+      "@veramo/kms-local": "4.2.0",
+      "@veramo/key-manager": "4.2.0",
+      "@veramo/credential-eip712": "4.2.0",
+      "@veramo/did-comm": "4.2.0",
+      "@veramo/message-handler": "4.2.0",
+      "@veramo/did-discovery": "4.2.0",
+      "@veramo/did-provider-ethr": "4.2.0",
+      "@veramo/did-provider-key": "4.2.0",
+      "@veramo/did-resolver": "4.2.0",
+      "@veramo/remote-client": "4.2.0",
+      "@veramo/remote-server": "4.2.0",
+      "@veramo/selective-disclosure": "4.2.0",
+      "@veramo/url-handler": "4.2.0",
+      "node-fetch": "2.6.12",
+      "@digitalbazaar/http-client": "3.4.1"
+    },
+    "patchedDependencies": {
+      "@veramo/core@4.2.0": "patches/@veramo__core@4.2.0.patch",
+      "@veramo/data-store@4.2.0": "patches/@veramo__data-store@4.2.0.patch",
+      "did-jwt@6.11.6": "patches/did-jwt@6.11.6.patch",
+      "@veramo/credential-w3c@4.2.0": "patches/@veramo__credential-w3c@4.2.0.patch"
     }
   }
-  
+}

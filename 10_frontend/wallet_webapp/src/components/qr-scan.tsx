@@ -8,7 +8,7 @@ import {useState, useEffect, useRef} from 'react';
 import jsQR from 'jsqr';
 import { Button } from "@/components/ui/button";
 import axios from 'axios';
-import { CredentialOfferClient, MetadataClient,} from '@sphereon/oid4vci-client';
+import { CredentialOfferClient, MetadataClient,OpenID4VCIClient} from '@sphereon/oid4vci-client';
 
 const getAccessToken = async(initiationURI_: string) => {
   const _initiationRequestWithUrl = await CredentialOfferClient.fromURI(initiationURI_);
@@ -26,10 +26,10 @@ const getAccessToken = async(initiationURI_: string) => {
   tokenReq.append('pre-authorized_code', 'aFYv7nBLVxB8n6rjNOGs3MSsAcpQVEWT9JVn886S2M0');
 
   await axios.post(_metadata.token_endpoint, tokenReq, {
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Access-Control-Allow-Origin': '*'
-      },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*'
+    },
   }).then(res => {
       console.log(res.data)
   }).catch(e=> {
@@ -44,49 +44,49 @@ export function QrScan() {
     const [contentWidth, setContentWidth] = useState<number>(100)
     const [contentHeight, setContentHeight] = useState<number>(100)
     useEffect(() => {
-        const config = { audio:false, video: { facingMode: "environment" }}
-        const ctx = canvasRef.current?.getContext('2d')
-        const canvasUpdate = () => {
-            if (ctx && videoRef.current && canvasRef.current) {
-                canvasRef.current.width = contentWidth
-                canvasRef.current.height = contentHeight
-                ctx.drawImage(videoRef.current, 0, 0, contentWidth, contentHeight)
-                requestAnimationFrame(canvasUpdate)
-            }
-        }
-        const checkImage = async() => {
-            if(ctx && videoRef.current){
-                ctx?.drawImage(videoRef.current, 0, 0, contentWidth, contentHeight)
-                const imageData = ctx.getImageData(0, 0, contentWidth, contentHeight)
-                if (imageData) {
-                    const code = jsQR(imageData.data, contentWidth, contentHeight)
-                    if (code) {
-                      console.log(code.data);
-                      getAccessToken(code.data);
-                    }
-                }
-                setTimeout(()=>{ checkImage() }, 200);
-            }
-        }
-    
-        navigator.mediaDevices.getUserMedia(config)
-        .then(stream => {
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream
-                videoRef.current.onloadedmetadata = () => {
-                    if (videoRef.current){
-                        videoRef.current.play()
-                        setContentWidth(videoRef.current.clientWidth)
-                        setContentHeight(videoRef.current.clientHeight)
-                        canvasUpdate()
-                        checkImage()
-                    }
+      const config = { audio:false, video: { facingMode: "environment" }}
+      const ctx = canvasRef.current?.getContext('2d')
+      const canvasUpdate = () => {
+          if (ctx && videoRef.current && canvasRef.current) {
+              canvasRef.current.width = contentWidth
+              canvasRef.current.height = contentHeight
+              ctx.drawImage(videoRef.current, 0, 0, contentWidth, contentHeight)
+              requestAnimationFrame(canvasUpdate)
+          }
+      }
+      const checkImage = async() => {
+        if(ctx && videoRef.current){
+            ctx?.drawImage(videoRef.current, 0, 0, contentWidth, contentHeight)
+            const imageData = ctx.getImageData(0, 0, contentWidth, contentHeight)
+            if (imageData) {
+                const code = jsQR(imageData.data, contentWidth, contentHeight)
+                if (code) {
+                  console.log(code.data);
+                  getAccessToken(code.data);
                 }
             }
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            setTimeout(()=>{ checkImage() }, 200);
+        }
+    }
+
+    navigator.mediaDevices.getUserMedia(config)
+    .then(stream => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+          videoRef.current.onloadedmetadata = () => {
+            if (videoRef.current){
+              videoRef.current.play()
+              setContentWidth(videoRef.current.clientWidth)
+              setContentHeight(videoRef.current.clientHeight)
+              canvasUpdate()
+              checkImage()
+            }
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },[contentWidth, contentHeight])
 
   return (

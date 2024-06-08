@@ -1,0 +1,264 @@
+{
+  "general": {
+    "credentialName": "Triall Guest",
+    "issueCredentialType": "triall2023",
+    "oid4vpAgentBaseUrl": "https://ssi.triall.io/demo/issuer",
+    "oid4vciAgentBaseUrl": "https://ssi.triall.io/demo/issuer",
+    "verifierUrl": "https://cix.triall.io",
+    "verifierUrlCaption": "Clinical Insights Exchange",
+    "downloadUrl": "https://ssi.triall.io/demo/issuer/#/download"
+  },
+  "pages": {
+    "download": {
+      "rightPane": {
+        "paradymWalletQRCode": {
+          "style": {
+            "width": 201,
+            "height": 287
+          },
+          "image": {
+            "src": "wallets/paradym_qrcode.svg",
+            "alt": "Paradym Wallet",
+            "width": 181,
+            "height": 181,
+            "style": {
+              "flexGrow": 1
+            }
+          },
+          "button": {
+            "style": {
+              "width": 198
+            },
+            "color": "#062058"
+          },
+          "downloadUrl": "https://qrco.de/be76fT"
+        },
+        "sphereonWalletQRCode": {
+          "style": {
+            "width": 201,
+            "height": 287
+          },
+          "image": {
+            "src": "wallets/sphereon_qrcode.svg",
+            "alt": "Sphereon Wallet",
+            "width": 201,
+            "height": 201,
+            "style": {
+              "flexGrow": 1
+            }
+          },
+          "button": {
+            "style": {
+              "width": 198
+            },
+            "color": "#062058"
+          },
+          "downloadUrl": "https://qrco.de/be5xfh"
+        }
+      },
+      "leftPane": {
+        "leftPhone": {
+          "logo": {
+            "src": "wallets/paradym_logo.png",
+            "alt": "Paradym",
+            "width": 151,
+            "height": 59
+          },
+          "image": {
+            "src": "wallets/paradym_wallet.svg",
+            "alt": "Paradym Wallet",
+            "width": 392,
+            "height": 796
+          }
+        },
+        "rightPhone": {
+          "logo": {
+            "src": "wallets/sphereon_logo.png",
+            "alt": "Sphereon",
+            "width": 204,
+            "height": 43
+          },
+          "image": {
+            "src": "wallets/sphereon_wallet.svg",
+            "alt": "Sphereon Wallet",
+            "width": 392,
+            "height": 796
+          }
+        }
+      }
+    },
+    "infoFromVPRequest": {
+      "photoLeft": "triall/guest_credential.svg",
+      "photoRight": "undraw_messenger_re_8bky_1.svg",
+      "textColor": "#E84461"
+    },
+    "issueSuccess": {
+      "photoLeft": "triall/guest_credential.svg",
+      "photoRight": "triall/undraw_messenger_re_8bky_grey.svg.svg",
+      "rightPaneButtonStepId": "toTriallDemo"
+    },
+    "infoSharedSuccess": {
+      "photoLeft": "triall/guest_credential.svg",
+      "photoLeftManual": "triall/guest_credential.svg",
+      "photoRight": "triall/undraw_certification_re_ifll_grey.svg"
+    },
+    "issueRequest": {
+      "photoManual": "triall/guest_credential.svg",
+      "photoWallet": "triall/guest_credential.svg"
+    },
+    "infoRequest": {
+      "photo": "image_4.svg",
+      "photoManual": "image_4.svg",
+      "text_top_of_image": "common_left_pane_title",
+      "sharing_data_right_pane_title": "manual_fill_data_right_pane_title",
+      "form": [
+        [
+          {
+            "id": "firstName",
+            "key": "firstName",
+            "label": "ssi_information_request_page_form_first_name_label",
+            "type": "text",
+            "required": true
+          }
+        ],
+        [
+          {
+            "id": "lastName",
+            "key": "lastName",
+            "label": "ssi_information_request_page_form_last_name_label",
+            "type": "text",
+            "required": true
+          }
+        ],
+        [
+          {
+            "id": "email",
+            "key": "email",
+            "label": "ssi_information_request_page_form_email_label",
+            "type": "text",
+            "required": true
+          }
+        ]
+      ]
+    },
+    "startPage": {
+      "photoLeft": "triall/landing_manual_grey.svg",
+      "photoRight": "triall/landing_wallet_grey.svg",
+      "logo": {
+        "src": "triall/logo.svg",
+        "alt": "triall",
+        "width": 260,
+        "height": 55
+      },
+      "styles": {
+        "mainContainer": {
+          "backgroundColor": "white"
+        },
+        "leftCardView": {
+          "textColor": "#FBFBFB",
+          "backgroundColor": "#326D85"
+        },
+        "rightCardView": {
+          "textColor": "#FBFBFB",
+          "buttonType": "primary"
+        }
+      }
+    },
+    "shareSuccess": {
+      "photoLeft": "image_2.svg",
+      "photoLeftManual": "triall/wallet.svg",
+      "photoRight": "triall/undraw_certification_re_ifll_grey.svg"
+    }
+  },
+  "routes": [
+    {
+      "id": "default",
+      "vpDefinitionId": "sphereonWalletIdentity",
+      "steps": [
+        {
+          "id": "startPage",
+          "operation": "navigate",
+          "path": "/start",
+          "nextId": "infoFromVPRequest",
+          "isDefaultRoute": true
+        },
+        {
+          "id": "infoRequest",
+          "operation": "navigate",
+          "path": "/information/manual/request",
+          "nextId": "shareSuccess"
+        },
+        {
+          "id": "shareSuccess",
+          "operation": "navigate",
+          "path": "/information/success",
+          "nextId": "credentialOffer"
+        },
+        {
+          "id": "infoFromVPRequest",
+          "operation": "navigate",
+          "path": "/credentials/verify/vp/request",
+          "nextId": "infoRequest",
+          "isDefaultRoute": true
+        },
+        {
+          "id": "credentialOffer",
+          "operation": "execute",
+          "action": "create-credential-offer",
+          "actionParams": {
+            "issueCredentialType": "GuestCredential"
+          },
+          "nextId": "issueRequest"
+        },
+        {
+          "id": "issueRequest",
+          "operation": "navigate",
+          "path": "/credentials/issue/request",
+          "nextId": "issueSuccess"
+        },
+        {
+          "id": "issueSuccess",
+          "operation": "navigate",
+          "path": "/credentials/issue/success",
+          "nextId": "toTriallDemo"
+        },
+        {
+          "id": "toTriallDemo",
+          "operation": "navigate",
+          "path": "https://cix.triall.io"
+        },
+        {
+          "id": "download",
+          "operation": "navigate",
+          "path": "/download"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "DeepLink": {},
+    "SSICardView": {
+      "styles": {
+        "mainContainer": {
+          "backgroundColor": "#326D85",
+          "textColor": "#FBFBFB"
+        }
+      }
+    },
+    "SSIPrimaryButton": {
+      "styles": {
+        "mainContainer": {
+          "backgroundColor": "#E84461"
+        }
+      }
+    },
+    "SSISecondaryButton": {
+      "styles": {
+        "mainContainer": {
+          "color": "#E84461"
+        }
+      }
+    },
+    "Text": {}
+  }
+}

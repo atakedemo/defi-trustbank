@@ -1,0 +1,309 @@
+{
+  "general": {
+    "credentialName": "Notaris",
+    "issueCredentialType": "NotaryCompanyVerification",
+    "oid4vpAgentBaseUrl": "https://notary.demo.sphereon.com/agent",
+    "oid4vciAgentBaseUrl": "https://notary.demo.sphereon.com/agent",
+    "verifierUrl": "https://sphereon.com",
+    "verifierUrlCaption": "Notaris credential",
+    "downloadUrl": "https://notary.demo.sphereon.com/agent/#/download",
+    "redirectUrl": "https://knb.demo.sphereon.com"
+  },
+  "pages": {
+    "download": {
+      "rightPane": {
+        "paradymWalletQRCode": {
+          "style": {
+            "width": 201,
+            "height": 287
+          },
+          "image": {
+            "src": "wallets/paradym_qrcode.svg",
+            "alt": "Paradym Wallet",
+            "width": 181,
+            "height": 181,
+            "style": {
+              "flexGrow": 1
+            }
+          },
+          "button": {
+            "style": {
+              "width": 198
+            },
+            "color": "#062058"
+          },
+          "downloadUrl": "https://qrco.de/be76fT"
+        },
+        "sphereonWalletQRCode": {
+          "style": {
+            "width": 201,
+            "height": 287
+          },
+          "image": {
+            "src": "wallets/sphereon_qrcode.svg",
+            "alt": "Sphereon Wallet",
+            "width": 201,
+            "height": 201,
+            "style": {
+              "flexGrow": 1
+            }
+          },
+          "button": {
+            "style": {
+              "width": 198
+            },
+            "color": "#062058"
+          },
+          "downloadUrl": "https://qrco.de/be5xfh"
+        }
+      },
+      "leftPane": {
+        "leftPhone": {
+          "logo": {
+            "src": "wallets/paradym_logo.png",
+            "alt": "Paradym",
+            "width": 151,
+            "height": 59
+          },
+          "image": {
+            "src": "wallets/paradym_wallet.svg",
+            "alt": "Paradym Wallet",
+            "width": 392,
+            "height": 796
+          }
+        },
+        "rightPhone": {
+          "logo": {
+            "src": "wallets/sphereon_logo.png",
+            "alt": "Sphereon",
+            "width": 204,
+            "height": 43
+          },
+          "image": {
+            "src": "wallets/sphereon_wallet.svg",
+            "alt": "Sphereon Wallet",
+            "width": 392,
+            "height": 796
+          }
+        }
+      }
+    },
+    "issueSuccess": {
+      "photoLeft": "notary/guest_credential.svg",
+      "photoRight": "notary/undraw_messenger_re_8bky_grey.svg.svg",
+      "rightPaneTitle": "title_secure_your_credential",
+      "rightPaneParagraph": "credentials_right_pane_top_paragraph"
+    },
+    "issueRequest": {
+      "title": "title_secure_your_credential",
+      "topParagraph": "paragraph_add_credential_notaris",
+      "bottomParagraph": "paragraph_scan_this_qr_notaris",
+      "logo": {
+        "src": "notary/guest_credential.svg",
+        "alt": "Van Auckland Notary",
+        "width": 700,
+        "height": 700
+      },
+      "qrCode": {
+        "topTitle": {
+          "h2Style": {
+            "color": "#424242"
+          },
+          "pStyle": {
+            "color": "#303030"
+          }
+        },
+        "bottomText": {
+          "pStyle": {
+            "color": "#303030"
+          },
+          "className": "poppins-normal-16"
+        }
+      },
+      "backgroundColor": "#BEBEBE",
+      "mobile": {
+        "width": "inherit",
+        "logo": {
+          "src": "notary/logo.svg",
+          "alt": "notary",
+          "width": 120,
+          "height": 120
+        },
+        "bottomText": {
+          "pStyle": {
+            "color": "#303030"
+          },
+          "className": "poppins-normal-16",
+          "paragraph": "credentials_right_pane_bottom_paragraph_mobile_notaris"
+        },
+        "backgroundColor": "#E8EAED",
+        "image": {
+          "src": "undraw_certification_re_ifll_1.svg",
+          "width": 300,
+          "height": 300
+        }
+      }
+    },
+    "infoRequest": {
+      "sharing_data_right_pane_title": "manual_fill_data_right_pane_title",
+      "sharing_data_right_pane_paragraph": "sharing_data_fill_out_right_pane_paragraph",
+      "sharing_data_right_pane_title_style": {
+        "color": "#303030"
+      },
+      "sharing_data_right_pane_paragraph_style": {
+        "color": "#303030"
+      },
+      "form": [
+        [
+          {
+            "id": "ssi_information_request_page_form_company_name",
+            "key": "Bedrijfsnaam",
+            "label": "ssi_information_request_page_form_company_name_label",
+            "labelStyle": { "color": "#424242" },
+            "inputStyle": { "color": "#424242" },
+            "type": "text",
+            "required": true
+          }
+        ],
+        [
+          {
+            "id": "ssi_information_request_page_form_company_location",
+            "key": "Bedrijfslocatie",
+            "label": "ssi_information_request_page_form_company_location_label",
+            "labelStyle": { "color": "#424242" },
+            "inputStyle": { "color": "#424242" },
+            "type": "text",
+            "required": true
+          }
+        ],
+        [
+          {
+            "id": "ssi_information_request_page_first_name_director",
+            "key": "Voornaam",
+            "label": "ssi_information_request_page_form_first_name_director_label",
+            "labelStyle": { "color": "#424242" },
+            "inputStyle": { "color": "#424242" },
+            "type": "text",
+            "required": true
+          },
+          {
+            "id": "ssi_information_request_page_form_last_name_director",
+            "key": "Achternaam",
+            "label": "ssi_information_request_page_form_last_name_director_label",
+            "labelStyle": { "color": "#424242" },
+            "inputStyle": { "color": "#424242" },
+            "type": "text",
+            "required": true
+          }
+        ],
+        [
+          {
+            "id": "ssi_information_request_page_form_place_of_birth",
+            "key": "Geboorteplaats",
+            "label": "ssi_information_request_page_form_place_of_birth_label",
+            "labelStyle": { "color": "#424242" },
+            "inputStyle": { "color": "#424242" },
+            "type": "text",
+            "required": true
+          }
+        ],
+        [
+          {
+            "id": "ssi_information_request_page_form_date_of_birth",
+            "key": "Geboortedatum",
+            "label": "ssi_information_request_page_form_date_of_birth_label",
+            "labelStyle": { "color": "#424242" },
+            "inputStyle": { "color": "#424242" },
+            "type": "date",
+            "required": true
+          }
+        ]
+      ],
+      "mobile": {
+        "logo": {
+          "src": "notary/logo.svg",
+          "alt": "notary",
+          "width": 120,
+          "height": 120
+        },
+        "backgroundColor": "#E8EAED"
+      },
+      "logo": {
+        "src": "notary/guest_credential.svg",
+        "alt": "Van Auckland Notary",
+        "width": 700,
+        "height": 700
+      },
+      "backgroundColor": "#BEBEBE",
+      "primaryButtonResourceId": "Share"
+    }
+  },
+  "routes": [
+    {
+      "id": "default",
+      "steps": [
+        {
+          "id": "infoRequest",
+          "operation": "navigate",
+          "path": "/information/manual/request",
+          "nextId": "credentialOffer",
+          "isDefaultRoute": true
+        },
+        {
+          "id": "credentialOffer",
+          "operation": "execute",
+          "action": "create-credential-offer",
+          "actionParams": {
+            "issueCredentialType": "NotaryCompanyVerification"
+          },
+          "nextId": "issueRequest"
+        },
+        {
+          "id": "issueRequest",
+          "operation": "navigate",
+          "path": "/credentials/issue/request",
+          "nextId": "issueSuccess"
+        },
+        {
+          "id": "issueSuccess",
+          "operation": "navigate",
+          "path": "https://knb.demo.sphereon.com"
+        },
+        {
+          "id": "download",
+          "operation": "navigate",
+          "path": "/download"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "DeepLink": {},
+    "SSICardView": {
+      "styles": {
+        "mainContainer": {
+          "backgroundColor": "#326D85",
+          "textColor": "#FBFBFB"
+        }
+      }
+    },
+    "SSIPrimaryButton": {
+      "styles": {
+        "mainContainer": {
+          "backgroundColor": "#252E7E"
+        },
+        "button": {
+          "width": "327px"
+        }
+      }
+    },
+    "SSISecondaryButton": {
+      "styles": {
+        "mainContainer": {
+          "color": "#E84461"
+        }
+      }
+    },
+    "Text": {}
+  }
+}

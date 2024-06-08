@@ -1,0 +1,25 @@
+.text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+div.text > p {
+    margin: 0;
+    color: #FBFBFB;
+}
+
+.pReduceLineSpace, .pReduceLineSpace > p {
+    flex-grow: 1;
+    margin: 0
+}
+
+.removeMarginTop > h2 {
+    margin-top: 0;
+}
+
+.removeMarginBottom > h2 {
+    margin-bottom: 0;
+}
