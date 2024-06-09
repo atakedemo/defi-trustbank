@@ -36,11 +36,16 @@ export class AwsWebappHostStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       websiteIndexDocument: "index.html",
-      websiteErrorDocument: "404.html"
+      websiteErrorDocument: "404.html",
+      publicReadAccess: true,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
     });
     const cloudfrontOai = new cloudfront.OriginAccessIdentity(
       this,
       "CloudFrontOAI",
+      {
+        comment: 'website-distribution-originAccessIdentity',
+      }
     );
 
     const bucketPolicy = new s3.BucketPolicy(this, "WebsiteBucketPolicy", {
@@ -64,14 +69,13 @@ export class AwsWebappHostStack extends cdk.Stack {
         var request = event.request;
         var uri = request.uri;
 
-        if (uri.startsWith('/app') || uri.startsWith('/web')) {
-            return request;
+        // Check whether the URI is missing a file name.
+        if (uri.endsWith('/')) {
+            request.uri += 'index.html';
         }
-
-        if (uri === '/') {
-            request.uri = '/web/index.html';
-        } else {
-            request.uri = '/web' + uri;
+        // Check whether the URI is missing a file extension.
+        else if (!uri.includes('.')) {
+            request.uri += '/index.html';
         }
 
         return request;
@@ -83,7 +87,9 @@ export class AwsWebappHostStack extends cdk.Stack {
     });
     const distribution = new cloudfront.Distribution(this, "trustBankWebDist", {
       defaultBehavior: {
-        origin: new origins.S3Origin(trustBankWebBucket),
+        origin: new origins.S3Origin(trustBankWebBucket, {
+          originAccessIdentity: cloudfrontOai
+        }),
         functionAssociations: [
           {
             function: cfFunction,
