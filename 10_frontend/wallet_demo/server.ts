@@ -36,6 +36,7 @@ app.post('/.*', async function(req:express.Request,res:express.Response){
   if (cmd[0] =="issuer_init"){
       console.log("init")
       let cred =  await getCredential(req.body.qr)
+      console.log(cred)
       res.send(cred);
   }
 })
