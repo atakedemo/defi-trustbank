@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head><meta charset='utf-8'></head>
+<body>
+  <div align=center>
+    <div id="title">[ID Wallet]</div><br>
+    <button id="scanQR">scan QR code</button>, <button id="stop-button">Stop</button>
+    <p><div id=msg></div>
+    <p><div id=qr></div>
+    <div id="video-container">
+      <video id="qr-video"></video>
+    </div>
+  </div>
+<b>Detected QR code: </b>
+<span id="cam-qr-result">None</span>
+<div id="credresult"></div>
+<br>
+<hr></body>
+<script type="module">
+    import QrScanner from "./qr-scanner.min.js";
+
+    let credentials =[]
+    const video = document.getElementById('qr-video');
+    const videoContainer = document.getElementById('video-container');
+    const camQrResult = document.getElementById('cam-qr-result');
+    const credResult = document.getElementById('credresult');
+
+    function setResult(label, result) {
+        console.log(result.data);
+        scanner.stop();
+        label.textContent = result.data;
+        label.style.color = 'teal';
+        _init(result.data)
+    }
+
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result), {
+        onDecodeError: error => {
+            camQrResult.textContent = error;
+            camQrResult.style.color = 'inherit';
+        },
+        highlightScanRegion: true,
+        highlightCodeOutline: true,
+    });
+
+    document.getElementById('scanQR').addEventListener('click', () => {
+        scanner.start();
+    });
+
+
+    function _init(_qrcode) {
+      let setting={
+        qr:_qrcode
+      }
+      sendData("./.issuer_init", JSON.stringify(setting), 'application/json', 
+        function(data){
+          data = JSON.parse(data)
+          if (data.result){
+            credentials.push({detail:data.detail, decode:data.decode})
+            credResult.innerHTML = "<pre>"+JSON.stringify(credentials[credentials.length-1].decode, null,"\t")+"</pre>";
+          }else{
+            credResult.innerHTML = "<br>--> failed<br>";
+          }
+        }
+      );
+    }
+
+    // for debugging
+    window.scanner = scanner;
+
+    document.getElementById('stop-button').addEventListener('click', () => {
+        scanner.stop();
+    });
+
+
+</script>
+<script type="text/javascript">
+  window.addEventListener('load',function() {  
+  });
+
+  function getData(url, type, cb){
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      switch(xhr.readyState){
+        case 4:
+          if (xhr.status == 200||xhr.status ==304){
+            cb(xhr.response)
+          }
+      }
+    };
+    xhr.open("GET", url, false);
+    xhr.setRequestHeader('Content-Type', type);
+    xhr.send('');
+  }
+
+  function sendData(url, data, type, cb){
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      switch(xhr.readyState){
+        case 4:
+          if (xhr.status == 200||xhr.status ==304){
+            console.log("send success");
+            cb(xhr.response)
+          }
+      }
+    };
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader('Content-Type', type);
+    xhr.send(data);
+  }
+  </script>
+</html>
